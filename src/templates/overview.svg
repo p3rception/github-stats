@@ -1,160 +1,97 @@
-<svg id="gh-dark-mode-only" width="360" height="138" xmlns="http://www.w3.org/2000/svg">
+<svg id="gh-dark-mode-only" width="360" height="110" xmlns="http://www.w3.org/2000/svg">
 <style>
 svg {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  font-size: 14px;
-  line-height: 21px;
 }
 
-#background {
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
+/* Corner brackets instead of a full border. The card sits on a dark page with
+   no panel behind it, so a closed 1px rectangle reads as a box drawn round
+   nothing; brackets frame the content without claiming to contain it.
+   Inset 6px a side, 14px arms. */
+.bracket {
   fill: none;
-  stroke: #334155;
+  stroke: rgba(96, 172, 246, 0.45);
   stroke-width: 1px;
-  rx: 10px;
-  ry: 10px;
 }
 
-
-foreignObject {
-  width: calc(100% - 10px - 32px);
-  height: calc(100% - 10px - 32px);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: auto;
-}
-
-th {
-  padding: 0.5em;
-  padding-top: 0;
-  text-align: left;
-  font-size: 14px;
+.title {
+  margin: 0 0 14px;
+  font-size: 10px;
   font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(96, 172, 246, 0.8);
+}
+
+.stats {
+  display: flex;
+}
+
+.stat {
+  flex: 1;
+  /* Staggered rise on load. The card is an image element, so this plays once
+     when it decodes - there is no hover or replay to worry about. */
+  animation: rise 0.5s ease-out backwards;
+}
+
+.stat:nth-child(2) { animation-delay: 0.08s; }
+.stat:nth-child(3) { animation-delay: 0.16s; }
+
+.num {
+  display: block;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 32px;
+  /* Tabular figures so the three columns stay optically aligned as the values
+     change width run to run. */
+  font-variant-numeric: tabular-nums;
   color: #60ACF6;
 }
 
-
-td {
-  margin-bottom: 16px;
-  margin-top: 8px;
-  padding: 0.25em;
-  font-size: 12px;
-  line-height: 18px;
-  color: #FFFFFF;
-  font-weight: 600;
+/* Labels carry the accent's job in reverse: small, wide, and quiet, so the
+   numeral is the loudest thing in each column. */
+.label {
+  display: block;
+  margin-top: 4px;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
 }
 
-
-tr {
-  transform: translateX(-200%);
-  animation: slideIn 2s ease-in-out forwards;
-}
-
-.octicon {
-  fill: #4DBCEA;
-  margin-right: 1ch;
-  vertical-align: top;
-}
-
-
-@keyframes slideIn {
-  to {
-    transform: translateX(0);
-  }
-}
-
-/* Travelling light around the border, matching the navbar's. Here it is a
-   dashed stroke on the border path itself, not a chain of positioned pieces:
-   a dash follows the rounded corners exactly, so the navbar's reason for
-   using many rigid segments does not apply. The chain survives only to fade
-   the trail - a single dash cannot vary its own opacity.
-
-   dasharray sums to the exact rounded-rect perimeter. The rect is 350x128
-   (the 360x138 canvas inset 5px a side) with r=10:
-     2*(350-20) + 2*(128-20) + 2*pi*10 = 938.832
-   A mismatch makes the dash jump at the seam once a lap. Recompute both this
-   and the keyframe if the card is ever resized.
-
-   ponytail: 16 segments, not the navbar's 64 - this perimeter is a third of
-   the bar's, so 64 would wrap a quarter of the border in light. */
-.orb {
-  fill: none;
-  stroke: #60ACF6;
-  stroke-width: 2px;
-  stroke-linecap: round;
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
-  rx: 10px;
-  ry: 10px;
-  stroke-dasharray: 8 930.832;
-  animation: orb 4s linear infinite;
-  /* 4px apart: 4/938.832 of a 4s lap. Half a segment, so they always overlap
-     into one streak rather than reading as beads. */
-  animation-delay: calc(var(--i) * -0.017s);
-  /* Negative delay puts a segment further along, so the highest index leads
-     and index 0 is the tail end. Fade accordingly. */
-  opacity: calc((var(--i) + 1) / 16);
-  filter: drop-shadow(0 0 3px rgba(96, 172, 246, 0.55));
-}
-
-@keyframes orb {
-  to {
-    stroke-dashoffset: -938.832;
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orb {
-    display: none;
+  .stat {
+    animation: none;
   }
 }
 </style>
 <g>
-<rect x="5" y="5" id="background" />
-<rect x="5" y="5" class="orb" style="--i: 0" />
-<rect x="5" y="5" class="orb" style="--i: 1" />
-<rect x="5" y="5" class="orb" style="--i: 2" />
-<rect x="5" y="5" class="orb" style="--i: 3" />
-<rect x="5" y="5" class="orb" style="--i: 4" />
-<rect x="5" y="5" class="orb" style="--i: 5" />
-<rect x="5" y="5" class="orb" style="--i: 6" />
-<rect x="5" y="5" class="orb" style="--i: 7" />
-<rect x="5" y="5" class="orb" style="--i: 8" />
-<rect x="5" y="5" class="orb" style="--i: 9" />
-<rect x="5" y="5" class="orb" style="--i: 10" />
-<rect x="5" y="5" class="orb" style="--i: 11" />
-<rect x="5" y="5" class="orb" style="--i: 12" />
-<rect x="5" y="5" class="orb" style="--i: 13" />
-<rect x="5" y="5" class="orb" style="--i: 14" />
-<rect x="5" y="5" class="orb" style="--i: 15" />
-<g>
-<foreignObject x="21" y="21" width="318" height="96">
+<path class="bracket" d="M6,20 L6,6 L20,6" />
+<path class="bracket" d="M340,6 L354,6 L354,20" />
+<path class="bracket" d="M354,90 L354,104 L340,104" />
+<path class="bracket" d="M20,104 L6,104 L6,90" />
+<foreignObject x="20" y="16" width="320" height="78">
 <div xmlns="http://www.w3.org/1999/xhtml">
 
-<table>
-<thead><tr style="transform: translateX(0);">
-<th colspan="2">Github Statistics</th>
-</tr></thead>
-<tbody>
+<p class="title">Github Statistics</p>
 
-<tr><td><svg class="octicon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16"><path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path></svg>Stars</td><td>{{ stars }}</td></tr>
-
-<tr style="animation-delay: 150ms"><td><svg class="octicon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16" role="img"><path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"></path></svg>Forks</td><td>{{ forks }}</td></tr>
-
-
-
-<tr style="animation-delay: 300ms"><td><svg class="octicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M1.679 7.932c.412-.621 1.242-1.75 2.366-2.717C5.175 4.242 6.527 3.5 8 3.5c1.473 0 2.824.742 3.955 1.715 1.124.967 1.954 2.096 2.366 2.717a.119.119 0 010 .136c-.412.621-1.242 1.75-2.366 2.717C10.825 11.758 9.473 12.5 8 12.5c-1.473 0-2.824-.742-3.955-1.715C2.92 9.818 2.09 8.69 1.679 8.068a.119.119 0 010-.136zM8 2c-1.981 0-3.67.992-4.933 2.078C1.797 5.169.88 6.423.43 7.1a1.619 1.619 0 000 1.798c.45.678 1.367 1.932 2.637 3.024C4.329 13.008 6.019 14 8 14c1.981 0 3.67-.992 4.933-2.078 1.27-1.091 2.187-2.345 2.637-3.023a1.619 1.619 0 000-1.798c-.45-.678-1.367-1.932-2.637-3.023C11.671 2.992 9.981 2 8 2zm0 8a2 2 0 100-4 2 2 0 000 4z"></path></svg>Repository views (past two weeks)</td><td>{{ views }}</td></tr>
-
-
-</tbody>
-</table>
+<div class="stats">
+<div class="stat"><span class="num">{{ stars }}</span><span class="label">Stars</span></div>
+<div class="stat"><span class="num">{{ forks }}</span><span class="label">Forks</span></div>
+<div class="stat"><span class="num">{{ views }}</span><span class="label">Views (14d)</span></div>
+</div>
 
 </div>
 </foreignObject>
-</g>
 </g>
 </svg>
