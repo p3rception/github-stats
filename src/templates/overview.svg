@@ -34,7 +34,7 @@ th {
   text-align: left;
   font-size: 14px;
   font-weight: 600;
-  color: #28A2E3;
+  color: #60ACF6;
 }
 
 
@@ -66,9 +66,71 @@ tr {
     transform: translateX(0);
   }
 }
+
+/* Travelling light around the border, matching the navbar's. Here it is a
+   dashed stroke on the border path itself, not a chain of positioned pieces:
+   a dash follows the rounded corners exactly, so the navbar's reason for
+   using many rigid segments does not apply. The chain survives only to fade
+   the trail - a single dash cannot vary its own opacity.
+
+   dasharray sums to the exact rounded-rect perimeter. The rect is 350x128
+   (the 360x138 canvas inset 5px a side) with r=10:
+     2*(350-20) + 2*(128-20) + 2*pi*10 = 938.832
+   A mismatch makes the dash jump at the seam once a lap. Recompute both this
+   and the keyframe if the card is ever resized.
+
+   ponytail: 16 segments, not the navbar's 64 - this perimeter is a third of
+   the bar's, so 64 would wrap a quarter of the border in light. */
+.orb {
+  fill: none;
+  stroke: #60ACF6;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  rx: 10px;
+  ry: 10px;
+  stroke-dasharray: 8 930.832;
+  animation: orb 4s linear infinite;
+  /* 4px apart: 4/938.832 of a 4s lap. Half a segment, so they always overlap
+     into one streak rather than reading as beads. */
+  animation-delay: calc(var(--i) * -0.017s);
+  /* Negative delay puts a segment further along, so the highest index leads
+     and index 0 is the tail end. Fade accordingly. */
+  opacity: calc((var(--i) + 1) / 16);
+  filter: drop-shadow(0 0 3px rgba(96, 172, 246, 0.55));
+}
+
+@keyframes orb {
+  to {
+    stroke-dashoffset: -938.832;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb {
+    display: none;
+  }
+}
 </style>
 <g>
 <rect x="5" y="5" id="background" />
+<rect x="5" y="5" class="orb" style="--i: 0" />
+<rect x="5" y="5" class="orb" style="--i: 1" />
+<rect x="5" y="5" class="orb" style="--i: 2" />
+<rect x="5" y="5" class="orb" style="--i: 3" />
+<rect x="5" y="5" class="orb" style="--i: 4" />
+<rect x="5" y="5" class="orb" style="--i: 5" />
+<rect x="5" y="5" class="orb" style="--i: 6" />
+<rect x="5" y="5" class="orb" style="--i: 7" />
+<rect x="5" y="5" class="orb" style="--i: 8" />
+<rect x="5" y="5" class="orb" style="--i: 9" />
+<rect x="5" y="5" class="orb" style="--i: 10" />
+<rect x="5" y="5" class="orb" style="--i: 11" />
+<rect x="5" y="5" class="orb" style="--i: 12" />
+<rect x="5" y="5" class="orb" style="--i: 13" />
+<rect x="5" y="5" class="orb" style="--i: 14" />
+<rect x="5" y="5" class="orb" style="--i: 15" />
 <g>
 <foreignObject x="21" y="21" width="318" height="96">
 <div xmlns="http://www.w3.org/1999/xhtml">
